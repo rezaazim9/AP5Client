@@ -1,3 +1,7 @@
+package View;
+
+import Model.Account;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +12,7 @@ public class LoginMenu implements ActionListener {
     JFrame frame;
     JButton loginButton;
     JButton registerButton;
+    JLabel mainLabel;
     JPanel panel;
     JLabel nameLabel;
     JLabel passwordLabel;
@@ -22,6 +27,7 @@ public class LoginMenu implements ActionListener {
         loginButton= new JButton("Login");
         registerButton= new JButton("Register");
         nameLabel= new JLabel("Name");
+        mainLabel = new JLabel("Reza's File Sharing System");
         passwordLabel = new JLabel("Password");
         exitButton = new JButton("Exit");
         password = new JPasswordField();
@@ -33,6 +39,7 @@ public class LoginMenu implements ActionListener {
         panel.add(loginButton);
         panel.add(registerButton);
         panel.add(exitButton);
+        panel.add(mainLabel);
         panel.add(passwordLabel);
         panel.add(nameLabel);
         loginButton.addActionListener(this);
@@ -44,6 +51,9 @@ public class LoginMenu implements ActionListener {
         registerButton.setBounds(150, 350, 200, 30);
         password.setBounds(150, 250, 200, 30);
         password.setFont(new Font("Arial", Font.PLAIN, 25));
+        mainLabel.setBounds(100, 50, 300, 50);
+        mainLabel.setForeground(Color.BLUE);
+        mainLabel.setFont(new Font("Arial", Font.PLAIN, 25));
         name.setFont(new Font("Arial", Font.PLAIN, 25));
         passwordLabel.setBounds(150, 200, 200, 50);
         nameLabel.setBounds(150, 100, 200, 50);

@@ -1,9 +1,11 @@
+package Model;
+
 import java.io.File;
 import java.util.ArrayList;
 
 public class Account {
-    String name;
-    String password;
+    public String name;
+    public String password;
     ArrayList<File> files;
     public  static ArrayList<Account> accounts = new ArrayList<>();
     public Account(String name, String password, ArrayList<File> files) {

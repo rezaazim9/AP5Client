@@ -1,30 +1,29 @@
+package View;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DownloadFrame implements ActionListener {
+public class UploadFrame implements ActionListener {
     JFrame frame;
     JPanel panel;
-    JButton downloadButton;
+    JButton uploadButton;
     JButton backButton;
-
-    public DownloadFrame() {
+    public UploadFrame() {
         frame = new JFrame();
         panel = new JPanel();
-        downloadButton = new JButton("Download");
+        uploadButton = new JButton("Upload");
         backButton = new JButton("Back");
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
         panel.setLayout(null);
-        downloadButton.setBounds(150, 100, 200, 30);
-        panel.add(downloadButton);
-        backButton.setBounds(150, 150, 200, 30);
-        panel.add(backButton);
+        uploadButton.setBounds(150, 100, 200, 30);
+        panel.add(uploadButton);
+        backButton.setBounds(150, 400, 200, 30);
         backButton.addActionListener(this);
-        downloadButton.addActionListener(this);
+        panel.add(backButton);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
     }
 
     @Override

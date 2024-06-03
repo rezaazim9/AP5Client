@@ -1,3 +1,5 @@
+package View;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,5 +58,22 @@ public class MainMenu implements ActionListener {
             frame.dispose();
             new DownloadFrame();
         }
+        if (e.getSource() == viewAccessButton) {
+            frame.dispose();
+            new ViewAccessFrame();
+        }
+        if (e.getSource() == uploadButton) {
+            frame.dispose();
+            new UploadFrame();
+        }
+        if (e.getSource() == viewButton) {
+            frame.dispose();
+            new ViewFrame();
+        }
+        if (e.getSource() == requestAccessButton) {
+            frame.dispose();
+            new RequestAccessFrame();
+        }
+
     }
 }
