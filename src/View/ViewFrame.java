@@ -18,10 +18,8 @@ public class ViewFrame implements ActionListener {
         backButton.setBounds(150, 400, 200, 30);
         backButton.addActionListener(this);
         panel.add(backButton);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {

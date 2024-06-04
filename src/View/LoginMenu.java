@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static Controller.Server.accounts;
+
 public class LoginMenu implements ActionListener {
     JFrame frame;
     JButton loginButton;
@@ -45,7 +47,7 @@ public class LoginMenu implements ActionListener {
         panel.add(nameLabel);
         loginButton.addActionListener(this);
         registerButton.addActionListener(this);
-        exitButton.addActionListener(e -> System.exit(0));
+        exitButton.addActionListener(e -> frame.dispose());
         exitButton.setBounds(150, 400, 200, 30);
         name.setBounds(150, 150, 200, 30);
         loginButton.setBounds(150, 300, 200, 30);
@@ -58,14 +60,13 @@ public class LoginMenu implements ActionListener {
         name.setFont(new Font("Arial", Font.PLAIN, 25));
         passwordLabel.setBounds(150, 200, 200, 50);
         nameLabel.setBounds(150, 100, 200, 50);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-            if (Account.accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(Server.hashPassword(password.getText())))) {
+            if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(Server.hashPassword(password.getText())))) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
                 frame.dispose();
                 new MainMenu();
@@ -74,11 +75,10 @@ public class LoginMenu implements ActionListener {
             }
         }
         if (e.getSource() == registerButton) {
-            if (Account.accounts.stream().anyMatch(account -> account.name.equals(name.getText()))) {
+            if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()))) {
                 JOptionPane.showMessageDialog(frame, "Account already exists");
             } else {
-
-                Account.accounts.add(new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>()));
+               accounts.add(new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>()));
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();
                 new MainMenu();

@@ -20,7 +20,6 @@ public class ViewAccessFrame implements ActionListener {
         backButton.setBounds(150, 400, 200, 30);
         panel.add(backButton);
         backButton.addActionListener(this);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 

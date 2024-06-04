@@ -44,7 +44,6 @@ public class MainMenu implements ActionListener {
         uploadButton.addActionListener(this);
         viewButton.addActionListener(this);
         requestAccessButton.addActionListener(this);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 

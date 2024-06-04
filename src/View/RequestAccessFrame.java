@@ -18,7 +18,6 @@ public class RequestAccessFrame implements ActionListener {
         backButton.setBounds(150, 400, 200, 30);
         backButton.addActionListener(this);
         panel.add(backButton);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 

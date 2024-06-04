@@ -24,7 +24,6 @@ public class DownloadFrame implements ActionListener {
         panel.add(backButton);
         backButton.addActionListener(this);
         downloadButton.addActionListener(this);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
     }
