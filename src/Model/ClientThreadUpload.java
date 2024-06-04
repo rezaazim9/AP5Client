@@ -14,6 +14,6 @@ public class ClientThreadUpload extends Thread {
 
     @Override
     public void run() {
-        account.files.add(file);
+        account.files.add(file.toString());
     }
 }

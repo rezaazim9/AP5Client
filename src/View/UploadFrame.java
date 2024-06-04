@@ -1,6 +1,7 @@
 package View;
 
 
+import Controller.Client;
 import Model.Account;
 import Model.ClientThreadUpload;
 
@@ -34,6 +35,7 @@ public class UploadFrame implements ActionListener {
         panel.add(uploadButton);
         backButton.setBounds(150, 400, 200, 30);
         backButton.addActionListener(this);
+        uploadButton.addActionListener(this);
         panel.add(backButton);
         frame.setVisible(true);
     }
@@ -47,7 +49,6 @@ public class UploadFrame implements ActionListener {
         if (e.getSource() == uploadButton) {
             Thread clientThreadUpload = new ClientThreadUpload(new File(fileAddress.getText()), account);
             clientThreadUpload.start();
-
         }
     }
 }
