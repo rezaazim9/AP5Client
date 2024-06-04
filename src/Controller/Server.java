@@ -3,8 +3,7 @@ package Controller;
 import Model.ClientTCP;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -14,7 +13,6 @@ public class Server {
         while (true) {
             Socket socket = serverSocket.accept();
             new ClientTCP(socket).start();
-
         }
     }
 

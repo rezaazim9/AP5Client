@@ -1,7 +1,5 @@
 package View;
 
-
-import Controller.Client;
 import Model.Account;
 import Model.ClientThreadUpload;
 
@@ -47,8 +45,19 @@ public class UploadFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == uploadButton) {
-            Thread clientThreadUpload = new ClientThreadUpload(new File(fileAddress.getText()), account);
-            clientThreadUpload.start();
+
+            File file=new File(fileAddress.getText());
+            account.files.add(file);
+           long length =  file.length();
+            while (length>0){
+                length-=1000;
+                byte[] upload=new byte[1000];
+                if (length<0){
+                    upload=new byte[(int) (length+1000)];
+                }
+                ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account,upload);
+                clientThreadUpload.start();
+            }
         }
     }
 }
