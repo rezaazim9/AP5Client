@@ -1,6 +1,7 @@
 package View;
 
 import Model.Account;
+import Model.RFile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +24,8 @@ public class ViewFrame implements ActionListener {
         frame.add(panel);
         panel.setLayout(null);
         ArrayList<String> files = new ArrayList<>();
-        for (File file : account.files) {
-            files.add(file.getName());
+        for (RFile file : account.files) {
+            files.add(file.file.getName());
         }
         list = new JList<>(files.toArray(new String[0]));
         list.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 30));

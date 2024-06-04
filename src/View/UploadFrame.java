@@ -2,6 +2,7 @@ package View;
 
 import Model.Account;
 import Model.ClientThreadUpload;
+import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ public class UploadFrame implements ActionListener {
     JButton backButton;
     JTextArea fileAddress;
     Account account;
+    static int id = 0;
 
     public UploadFrame(Account account) {
         this.account = account;
@@ -47,7 +49,7 @@ public class UploadFrame implements ActionListener {
         if (e.getSource() == uploadButton) {
 
             File file=new File(fileAddress.getText());
-            account.files.add(file);
+            account.files.add(new RFile(id++,file));
            long length =  file.length();
             while (length>0){
                 length-=1000;
