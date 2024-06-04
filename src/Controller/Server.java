@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Account;
 import Model.ClientThread;
 
 import java.io.IOException;
@@ -8,11 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 public class Server {
-    public  static ArrayList<Account> accounts = new ArrayList<>();
-
     public static void main(String[] args) throws IOException {
        ServerSocket serverSocket = new ServerSocket(1234);
        while (true) {

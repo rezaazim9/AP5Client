@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import static Controller.Server.accounts;
+import static Model.Account.accounts;
+
 
 public class LoginMenu implements ActionListener {
     JFrame frame;
