@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Server;
 import Model.Account;
 
 import javax.swing.*;
@@ -24,14 +25,14 @@ public class LoginMenu implements ActionListener {
         frame = new JFrame();
         panel = new JPanel();
         name = new JTextArea();
-        loginButton= new JButton("Login");
-        registerButton= new JButton("Register");
-        nameLabel= new JLabel("Name");
+        loginButton = new JButton("Login");
+        registerButton = new JButton("Register");
+        nameLabel = new JLabel("Name");
         mainLabel = new JLabel("Reza's File Sharing System");
         passwordLabel = new JLabel("Password");
         exitButton = new JButton("Exit");
         password = new JPasswordField();
-        frame.setBounds(450,150,500, 500);
+        frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
         panel.add(name);
         panel.setLayout(null);
@@ -64,19 +65,20 @@ public class LoginMenu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
-          if (Account.accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(password.getText()))){
-              JOptionPane.showMessageDialog(frame, "Login Successful");
+            if (Account.accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(Server.hashPassword(password.getText())))) {
+                JOptionPane.showMessageDialog(frame, "Login Successful");
                 frame.dispose();
                 new MainMenu();
-          } else {
-              JOptionPane.showMessageDialog(frame, "Login Failed");
-          }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Login Failed");
+            }
         }
         if (e.getSource() == registerButton) {
-            if (Account.accounts.stream().anyMatch(account -> account.name.equals(name.getText()))){
+            if (Account.accounts.stream().anyMatch(account -> account.name.equals(name.getText()))) {
                 JOptionPane.showMessageDialog(frame, "Account already exists");
             } else {
-                Account.accounts.add(new Account(name.getText(), password.getText(),new ArrayList<>()));
+
+                Account.accounts.add(new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>()));
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();
                 new MainMenu();
