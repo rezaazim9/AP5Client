@@ -1,5 +1,7 @@
 package View;
 
+import Model.Account;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,9 @@ public class RequestAccessFrame implements ActionListener {
     JFrame frame;
     JPanel panel;
     JButton backButton;
-    public RequestAccessFrame() {
+    Account account;
+    public RequestAccessFrame(Account account) {
+        this.account=account;
         frame = new JFrame();
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
@@ -25,7 +29,7 @@ public class RequestAccessFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu();
+            new MainMenu(account);
         }
     }
 }

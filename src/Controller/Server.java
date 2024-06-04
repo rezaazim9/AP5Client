@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.ClientThread;
+import Model.ClientTCP;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,13 +10,14 @@ import java.security.NoSuchAlgorithmException;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-       ServerSocket serverSocket = new ServerSocket(1234);
-       while (true) {
-           Socket socket = serverSocket.accept();
-           Thread clientThread = new ClientThread(socket);
-           clientThread.start();
-       }
+        ServerSocket serverSocket = new ServerSocket(1234);
+        while (true) {
+            Socket socket = serverSocket.accept();
+            new ClientTCP(socket).start();
+
+        }
     }
+
     public static String hashPassword(String password) {
         MessageDigest md;
         try {

@@ -23,7 +23,7 @@ public class LoginMenu implements ActionListener {
     JTextArea name;
     JPasswordField password;
     JButton exitButton;
-
+    Account account;
     public LoginMenu() {
         frame = new JFrame();
         panel = new JPanel();
@@ -66,11 +66,12 @@ public class LoginMenu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        account=new Account(name.getText(),Server.hashPassword(password.getText()),new ArrayList<>());
         if (e.getSource() == loginButton) {
             if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(Server.hashPassword(password.getText())))) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
                 frame.dispose();
-                new MainMenu();
+                new MainMenu(account);
             } else {
                 JOptionPane.showMessageDialog(frame, "Login Failed");
             }
@@ -79,10 +80,10 @@ public class LoginMenu implements ActionListener {
             if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()))) {
                 JOptionPane.showMessageDialog(frame, "Account already exists");
             } else {
-               accounts.add(new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>()));
+               accounts.add(account);
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();
-                new MainMenu();
+                new MainMenu(account);
             }
         }
     }

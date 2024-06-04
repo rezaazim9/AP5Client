@@ -1,5 +1,7 @@
 package View;
 
+import Model.Account;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +11,10 @@ public class DownloadFrame implements ActionListener {
     JPanel panel;
     JButton downloadButton;
     JButton backButton;
+    Account account;
 
-    public DownloadFrame() {
+    public DownloadFrame(Account account) {
+        this.account=account;
         frame = new JFrame();
         panel = new JPanel();
         downloadButton = new JButton("Download");
@@ -32,7 +36,7 @@ public class DownloadFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu();
+            new MainMenu(account);
         }
     }
 }

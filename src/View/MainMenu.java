@@ -1,5 +1,7 @@
 package View;
 
+import Model.Account;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +15,10 @@ public class MainMenu implements ActionListener {
     JButton viewAccessButton;
     JButton viewButton;
     JButton requestAccessButton;
+    Account account;
 
-    public MainMenu() {
+    public MainMenu(Account account) {
+        this.account=account;
         frame = new JFrame();
         panel = new JPanel();
         exitButton = new JButton("Exit");
@@ -55,23 +59,23 @@ public class MainMenu implements ActionListener {
         }
         if (e.getSource() == downloadButton) {
             frame.dispose();
-            new DownloadFrame();
+            new DownloadFrame(account);
         }
         if (e.getSource() == viewAccessButton) {
             frame.dispose();
-            new ViewAccessFrame();
+            new ViewAccessFrame(account);
         }
         if (e.getSource() == uploadButton) {
             frame.dispose();
-            new UploadFrame();
+            new UploadFrame(account);
         }
         if (e.getSource() == viewButton) {
             frame.dispose();
-            new ViewFrame();
+            new ViewFrame(account);
         }
         if (e.getSource() == requestAccessButton) {
             frame.dispose();
-            new RequestAccessFrame();
+            new RequestAccessFrame(account);
         }
 
     }
