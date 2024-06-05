@@ -2,6 +2,7 @@ package View;
 
 import Controller.Server;
 import Model.Account;
+import Model.JWT;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +68,7 @@ public class LoginMenu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        account = new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>());
+        account = new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>(), null);
         if (e.getSource() == loginButton) {
             if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(Server.hashPassword(password.getText())))) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
@@ -81,6 +82,10 @@ public class LoginMenu implements ActionListener {
             if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()))) {
                 JOptionPane.showMessageDialog(frame, "Account already exists");
             } else {
+                String token = Server.hashPassword(name.getText() + password.getText());
+                JWT jwt = new JWT(token, name.getText());
+                JWT.jwtList.add(jwt);
+                account.jwt=jwt;
                 accounts.add(account);
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();

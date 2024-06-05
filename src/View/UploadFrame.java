@@ -2,6 +2,7 @@ package View;
 
 import Model.Account;
 import Model.ClientThreadUpload;
+import Model.JWTThread;
 import Model.RFile;
 
 import javax.swing.*;
@@ -47,7 +48,9 @@ public class UploadFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == uploadButton) {
-
+           JWTThread jwtThread = new JWTThread(account.jwt.getToken(),frame);
+            jwtThread.start();
+            if (jwtThread.getAccess()){
             File file=new File(fileAddress.getText());
             account.files.add(new RFile(id++,file));
            long length =  file.length();
@@ -59,6 +62,7 @@ public class UploadFrame implements ActionListener {
                 }
                 ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account,upload);
                 clientThreadUpload.start();
+            }
             }
         }
     }

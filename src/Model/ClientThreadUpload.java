@@ -9,6 +9,7 @@ public class ClientThreadUpload extends Thread {
     Account account;
     byte[] upload;
 
+
     public ClientThreadUpload(File file, Account account, byte[] upload) {
         this.file = file;
         this.account = account;
@@ -18,21 +19,12 @@ public class ClientThreadUpload extends Thread {
     @Override
     public void run() {
         DatagramPacket packet ;
-        DatagramSocket socket;
         try {
-            packet = new DatagramPacket(upload,upload.length, InetAddress.getLocalHost(),1234);
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-             socket = new DatagramSocket();
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            socket.send(packet);
+          new Socket("localhost", 1111);
+            packet = new DatagramPacket(upload, upload.length, InetAddress.getLocalHost(), 2222);
+            DatagramSocket socket1 = new DatagramSocket();
+            socket1.send(packet);
         } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

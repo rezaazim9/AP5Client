@@ -26,8 +26,8 @@ public class ViewFrame implements ActionListener {
             files.add(file.file.getName());
         }
         list = new JList<>(files.toArray(new String[0]));
-        list.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 30));
-        list.setBounds(100, 100, 300, 200);
+        list.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 25));
+        list.setBounds(150, 20, 200, 330);
         panel.add(list);
         backButton = new JButton("Back");
         backButton.setBounds(150, 400, 200, 30);

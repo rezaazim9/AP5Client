@@ -9,10 +9,15 @@ import java.security.NoSuchAlgorithmException;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(1234);
+        ServerSocket serverSocket = new ServerSocket(1111);
+        DatagramSocket socket1 = new DatagramSocket(2222);
         while (true) {
             Socket socket = serverSocket.accept();
             new ClientTCP(socket).start();
+            byte[] buffer = new byte[1000];
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+            socket1.receive(packet);
+            System.out.println("Received: " + new String(packet.getData()));
         }
     }
 
