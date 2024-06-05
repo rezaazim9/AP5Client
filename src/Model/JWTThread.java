@@ -19,22 +19,28 @@ public class JWTThread extends Thread {
             access = true;
         }
     }
-    public boolean getAccess(){
+
+    public boolean getAccess() {
         return access;
     }
-    public void setAccess(boolean access){
+
+    public void setAccess(boolean access) {
         this.access = access;
     }
-    public void setToken(String token){
+
+    public void setToken(String token) {
         this.token = token;
     }
-    public String getToken(){
+
+    public String getToken() {
         return token;
     }
-    public Frame getFrame(){
+
+    public Frame getFrame() {
         return frame;
     }
-    public void setFrame(Frame frame){
+
+    public void setFrame(Frame frame) {
         this.frame = frame;
     }
 }

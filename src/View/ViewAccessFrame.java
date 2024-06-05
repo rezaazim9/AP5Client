@@ -11,9 +11,10 @@ public class ViewAccessFrame implements ActionListener {
     JPanel panel;
     JButton backButton;
     Account account;
+
     public ViewAccessFrame(Account account) {
-        this.account=account;
-         frame = new JFrame();
+        this.account = account;
+        frame = new JFrame();
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);

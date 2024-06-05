@@ -14,7 +14,7 @@ public class DownloadFrame implements ActionListener {
     Account account;
 
     public DownloadFrame(Account account) {
-        this.account=account;
+        this.account = account;
         frame = new JFrame();
         panel = new JPanel();
         downloadButton = new JButton("Download");

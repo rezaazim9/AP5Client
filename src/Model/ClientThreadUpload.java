@@ -18,9 +18,9 @@ public class ClientThreadUpload extends Thread {
 
     @Override
     public void run() {
-        DatagramPacket packet ;
+        DatagramPacket packet;
         try {
-          new Socket("localhost", 1111);
+            new Socket("localhost", 1111);
             packet = new DatagramPacket(upload, upload.length, InetAddress.getLocalHost(), 2222);
             DatagramSocket socket1 = new DatagramSocket();
             socket1.send(packet);

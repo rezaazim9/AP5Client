@@ -48,21 +48,21 @@ public class UploadFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == uploadButton) {
-           JWTThread jwtThread = new JWTThread(account.jwt.getToken(),frame);
+            JWTThread jwtThread = new JWTThread(account.jwt.getToken(), frame);
             jwtThread.start();
-            if (jwtThread.getAccess()){
-            File file=new File(fileAddress.getText());
-            account.files.add(new RFile(id++,file));
-           long length =  file.length();
-            while (length>0){
-                length-=1000;
-                byte[] upload=new byte[1000];
-                if (length<0){
-                    upload=new byte[(int) (length+1000)];
+            if (jwtThread.getAccess()) {
+                File file = new File(fileAddress.getText());
+                account.files.add(new RFile(id++, file));
+                long length = file.length();
+                while (length > 0) {
+                    length -= 1000;
+                    byte[] upload = new byte[1000];
+                    if (length < 0) {
+                        upload = new byte[(int) (length + 1000)];
+                    }
+                    ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account, upload);
+                    clientThreadUpload.start();
                 }
-                ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account,upload);
-                clientThreadUpload.start();
-            }
             }
         }
     }

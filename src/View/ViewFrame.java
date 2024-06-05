@@ -14,8 +14,9 @@ public class ViewFrame implements ActionListener {
     JButton backButton;
     JList<String> list;
     Account account;
+
     public ViewFrame(Account account) {
-        this.account=account;
+        this.account = account;
         frame = new JFrame();
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
@@ -35,6 +36,7 @@ public class ViewFrame implements ActionListener {
         panel.add(backButton);
         frame.setVisible(true);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {

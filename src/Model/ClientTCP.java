@@ -4,7 +4,7 @@ import View.LoginMenu;
 
 import java.net.Socket;
 
-public class ClientTCP extends Thread{
+public class ClientTCP extends Thread {
     Socket socket;
 
     public ClientTCP(Socket socket) {

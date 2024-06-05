@@ -11,8 +11,9 @@ public class RequestAccessFrame implements ActionListener {
     JPanel panel;
     JButton backButton;
     Account account;
+
     public RequestAccessFrame(Account account) {
-        this.account=account;
+        this.account = account;
         frame = new JFrame();
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);

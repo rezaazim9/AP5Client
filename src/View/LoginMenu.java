@@ -85,7 +85,7 @@ public class LoginMenu implements ActionListener {
                 String token = Server.hashPassword(name.getText() + password.getText());
                 JWT jwt = new JWT(token, name.getText());
                 JWT.jwtList.add(jwt);
-                account.jwt=jwt;
+                account.jwt = jwt;
                 accounts.add(account);
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();
