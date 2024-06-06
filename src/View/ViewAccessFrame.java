@@ -1,6 +1,8 @@
 package View;
 
+import Controller.Server;
 import Model.Account;
+import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,8 @@ public class ViewAccessFrame implements ActionListener {
     JPanel panel;
     JButton backButton;
     Account account;
+    JTextArea file;
+    JButton accessButton;
 
     public ViewAccessFrame(Account account) {
         this.account = account;
@@ -19,9 +23,17 @@ public class ViewAccessFrame implements ActionListener {
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
         panel.setLayout(null);
+        accessButton = new JButton("Access List");
+        file = new JTextArea();
+       accessButton.addActionListener(this);
+        file.setBounds(150, 150, 200, 30);
+        panel.add(file);
+        file.setText("Enter the file name");
         backButton = new JButton("Back");
+        accessButton.setBounds(150, 300, 200, 30);
         backButton.setBounds(150, 400, 200, 30);
         panel.add(backButton);
+        panel.add(accessButton);
         backButton.addActionListener(this);
         frame.setVisible(true);
     }
@@ -31,6 +43,20 @@ public class ViewAccessFrame implements ActionListener {
         if (e.getSource() == backButton) {
             frame.dispose();
             new MainMenu(account);
+        }
+        if (e.getSource() == accessButton) {
+            boolean found = false;
+            frame.dispose();
+            for (RFile f : Server.files) {
+                if (f.file.getName().equals(file.getText())&&f.getAccounts().contains(account)) {
+                    found = true;
+                }
+            }
+            if (found) {
+                new AccessFrame(account, file.getText());
+            } else {
+                new ViewAccessFrame(account);
+            }
         }
     }
 }

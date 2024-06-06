@@ -23,7 +23,7 @@ public class ViewFrame implements ActionListener {
         frame.add(panel);
         panel.setLayout(null);
         ArrayList<String> files = new ArrayList<>();
-        for (RFile file : account.files) {
+        for (RFile file : account.getFiles()) {
             files.add(file.file.getName());
         }
         list = new JList<>(files.toArray(new String[0]));

@@ -1,23 +1,25 @@
 package Controller;
 
+import Model.Account;
 import Model.ClientTCP;
+import Model.RFile;
 
 import java.io.IOException;
 import java.net.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class Server {
+    public static ArrayList<RFile> files = new ArrayList<>();
+    public static ArrayList<Account> accounts = new ArrayList<>();
+
+
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = new ServerSocket(1111);
-        DatagramSocket socket1 = new DatagramSocket(2222);
         while (true) {
             Socket socket = serverSocket.accept();
             new ClientTCP(socket).start();
-            byte[] buffer = new byte[1000];
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-            socket1.receive(packet);
-            System.out.println("Received: " + new String(packet.getData()));
         }
     }
 

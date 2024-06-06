@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import static Model.Account.accounts;
+import static Controller.Server.accounts;
 
 
 public class LoginMenu implements ActionListener {
@@ -68,24 +68,25 @@ public class LoginMenu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        account = new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>(), null);
         if (e.getSource() == loginButton) {
-            if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()) && account.password.equals(Server.hashPassword(password.getText())))) {
+            if (accounts.stream().anyMatch(account -> account.getName().equals(name.getText()) && account.getPassword().equals(Server.hashPassword(password.getText())))) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
                 frame.dispose();
+                account = accounts.stream().filter(account -> account.getName().equals(name.getText())).findFirst().get();
                 new MainMenu(account);
             } else {
                 JOptionPane.showMessageDialog(frame, "Login Failed");
             }
         }
         if (e.getSource() == registerButton) {
-            if (accounts.stream().anyMatch(account -> account.name.equals(name.getText()))) {
+            account = new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>(), null);
+            if (accounts.stream().anyMatch(account -> account.getName().equals(name.getText()))) {
                 JOptionPane.showMessageDialog(frame, "Account already exists");
             } else {
                 String token = Server.hashPassword(name.getText() + password.getText());
                 JWT jwt = new JWT(token, name.getText());
                 JWT.jwtList.add(jwt);
-                account.jwt = jwt;
+                account.setJwt(jwt);
                 accounts.add(account);
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();

@@ -1,14 +1,15 @@
 package View;
 
+import Controller.Server;
 import Model.Account;
 import Model.ClientThreadUpload;
-import Model.JWTThread;
 import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 public class UploadFrame implements ActionListener {
     JFrame frame;
@@ -48,11 +49,12 @@ public class UploadFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == uploadButton) {
-            JWTThread jwtThread = new JWTThread(account.jwt.getToken(), frame);
-            jwtThread.start();
-            if (jwtThread.getAccess()) {
+            if (JOptionPane.showConfirmDialog(frame, account.getJwt(), "Access", JOptionPane.YES_NO_OPTION) == 0) {
                 File file = new File(fileAddress.getText());
-                account.files.add(new RFile(id++, file));
+                ArrayList<Account> accounts = new ArrayList<>();
+                accounts.add(account);
+                Server.files.add(new RFile(id++, file, accounts, new ArrayList<>()));
+                account.getFiles().add(new RFile(id++, file, accounts, new ArrayList<>()));
                 long length = file.length();
                 while (length > 0) {
                     length -= 1000;
@@ -60,8 +62,8 @@ public class UploadFrame implements ActionListener {
                     if (length < 0) {
                         upload = new byte[(int) (length + 1000)];
                     }
-                    ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account, upload);
-                    clientThreadUpload.start();
+//                    ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account, upload);
+//                    clientThreadUpload.start();
                 }
             }
         }
