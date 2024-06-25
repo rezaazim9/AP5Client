@@ -1,8 +1,6 @@
 package View;
 
-import Controller.Server;
 import Model.Account;
-import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +23,7 @@ public class ViewAccessFrame implements ActionListener {
         panel.setLayout(null);
         accessButton = new JButton("Access List");
         file = new JTextArea();
-       accessButton.addActionListener(this);
+        accessButton.addActionListener(this);
         file.setBounds(150, 150, 200, 30);
         panel.add(file);
         file.setText("Enter the file name");
@@ -47,11 +45,11 @@ public class ViewAccessFrame implements ActionListener {
         if (e.getSource() == accessButton) {
             boolean found = false;
             frame.dispose();
-            for (RFile f : Server.files) {
-                if (f.file.getName().equals(file.getText())&&f.getAccounts().contains(account)) {
-                    found = true;
-                }
-            }
+//            for (RFile f : Server.files) {
+//                if (f.file.getName().equals(file.getText())&&f.getAccounts().contains(account)) {
+//                    found = true;
+//                }
+//            }
             if (found) {
                 new AccessFrame(account, file.getText());
             } else {

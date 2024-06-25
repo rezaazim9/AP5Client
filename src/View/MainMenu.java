@@ -18,7 +18,7 @@ public class MainMenu implements ActionListener {
     Account account;
 
     public MainMenu(Account account) {
-        this.account=account;
+        this.account = account;
         frame = new JFrame();
         panel = new JPanel();
         exitButton = new JButton("Exit");
@@ -40,7 +40,7 @@ public class MainMenu implements ActionListener {
         requestAccessButton = new JButton("Request Access");
         panel.add(requestAccessButton);
         requestAccessButton.setBounds(150, 200, 200, 30);
-         panel.add(exitButton);
+        panel.add(exitButton);
         exitButton.setBounds(150, 350, 200, 30);
         exitButton.addActionListener(this);
         downloadButton.addActionListener(this);

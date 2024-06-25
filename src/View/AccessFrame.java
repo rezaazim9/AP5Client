@@ -1,6 +1,5 @@
 package View;
 
-import Controller.Server;
 import Model.Account;
 import Model.RFile;
 
@@ -27,11 +26,11 @@ public class AccessFrame implements ActionListener {
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
-        for (RFile f : Server.files) {
-            if (f.file.getName().equals(fileName)) {
-                rfile = f;
-            }
-        }
+//        for (RFile f : Server.files) {
+//            if (f.file.getName().equals(fileName)) {
+//                rfile = f;
+//            }
+//        }
         if (rfile.file == null||!account.getFiles().contains(rfile)) {
             frame.dispose();
         }
@@ -78,26 +77,26 @@ public class AccessFrame implements ActionListener {
             new ViewAccessFrame(account);
         }
         if (e.getSource() == addButton) {
-            for (Account account1:Server.accounts){
-                if (account1.getName().equals(accountName.getText())){
-                    rfile.addAccount(account1);
-                    account1.getFiles().add(rfile);
-                    frame.dispose();
-                    rfile.removeRequest(account1);
-                    new AccessFrame(account, rfile.file.getName());
-                }
-            }
+//            for (Account account1:Server.accounts){
+//                if (account1.getName().equals(accountName.getText())){
+//                    rfile.addAccount(account1);
+//                    account1.getFiles().add(rfile);
+//                    frame.dispose();
+//                    rfile.removeRequest(account1);
+//                    new AccessFrame(account, rfile.file.getName());
+//                }
+//            }
         }
         if (e.getSource() == removeButton) {
-            for (Account account1:Server.accounts){
-                if (account1.getName().equals(accountName.getText())){
-                    rfile.removeAccount(account1);
-                    account1.getFiles().remove(rfile);
-                    frame.dispose();
-                    rfile.removeRequest(account1);
-                    new AccessFrame(account, rfile.file.getName());
-                }
-            }
+//            for (Account account1:Server.accounts){
+//                if (account1.getName().equals(accountName.getText())){
+//                    rfile.removeAccount(account1);
+//                    account1.getFiles().remove(rfile);
+//                    frame.dispose();
+//                    rfile.removeRequest(account1);
+//                    new AccessFrame(account, rfile.file.getName());
+//                }
+//            }
         }
     }
 }

@@ -1,8 +1,6 @@
 package View;
 
-import Controller.Server;
 import Model.Account;
-import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -45,11 +43,11 @@ public class RequestAccessFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == accessButton) {
-            for (RFile f : Server.files) {
-                if (f.file.getName().equals(fileName.getText())) {
-                    f.addRequest(account);
-                }
-            }
+//            for (RFile f : Server.files) {
+//                if (f.file.getName().equals(fileName.getText())) {
+//                    f.addRequest(account);
+//                }
+//            }
         }
     }
 }

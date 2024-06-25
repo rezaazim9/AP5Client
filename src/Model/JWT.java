@@ -6,8 +6,6 @@ public class JWT {
     private String token;
     private String username;
 
-    public static ArrayList<JWT> jwtList = new ArrayList<>();
-
     public JWT(String token, String username) {
         this.token = token;
         this.username = username;

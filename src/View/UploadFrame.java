@@ -1,8 +1,6 @@
 package View;
 
-import Controller.Server;
 import Model.Account;
-import Model.ClientThreadUpload;
 import Model.RFile;
 
 import javax.swing.*;
@@ -53,7 +51,7 @@ public class UploadFrame implements ActionListener {
                 File file = new File(fileAddress.getText());
                 ArrayList<Account> accounts = new ArrayList<>();
                 accounts.add(account);
-                Server.files.add(new RFile(id++, file, accounts, new ArrayList<>()));
+//                Server.files.add(new RFile(id++, file, accounts, new ArrayList<>()));
                 account.getFiles().add(new RFile(id++, file, accounts, new ArrayList<>()));
                 long length = file.length();
                 while (length > 0) {

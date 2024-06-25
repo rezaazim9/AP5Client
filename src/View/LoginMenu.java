@@ -1,16 +1,19 @@
 package View;
 
-import Controller.Server;
 import Model.Account;
 import Model.JWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.io.File;
 
-import static Controller.Server.accounts;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 
 public class LoginMenu implements ActionListener {
@@ -66,28 +69,69 @@ public class LoginMenu implements ActionListener {
         frame.setVisible(true);
     }
 
+    public static String hashPassword(String password) {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            throw new RuntimeException(ex);
+        }
+        md.update(password.getBytes());
+        byte[] bytes = md.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte aByte : bytes) {
+            sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
+    }
+
+    public Account createAccount() {
+        return new Account(name.getText(), hashPassword(password.getText()), new ArrayList<>(), new JWT(hashPassword(name.getText() + password.getText()), name.getText()));
+    }
+
+    public void writer(Account account) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\Request.json"), account);
+    }
+
+    public boolean reader() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        boolean response = objectMapper.readValue(new File("C:\\Users\\ostad\\IdeaProjects\\Response.json"), boolean.class);
+        objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\Response.json"), null);
+        return response;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        try {
+            writer(createAccount());
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        boolean response;
+//        try {
+//            response = reader();
+//        } catch (IOException ex) {
+//            throw new RuntimeException(ex);
+//        }
         if (e.getSource() == loginButton) {
-            if (accounts.stream().anyMatch(account -> account.getName().equals(name.getText()) && account.getPassword().equals(Server.hashPassword(password.getText())))) {
+            if (true) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
                 frame.dispose();
-                account = accounts.stream().filter(account -> account.getName().equals(name.getText())).findFirst().get();
                 new MainMenu(account);
             } else {
                 JOptionPane.showMessageDialog(frame, "Login Failed");
             }
         }
         if (e.getSource() == registerButton) {
-            account = new Account(name.getText(), Server.hashPassword(password.getText()), new ArrayList<>(), null);
-            if (accounts.stream().anyMatch(account -> account.getName().equals(name.getText()))) {
+            if (false) {
                 JOptionPane.showMessageDialog(frame, "Account already exists");
             } else {
-                String token = Server.hashPassword(name.getText() + password.getText());
-                JWT jwt = new JWT(token, name.getText());
-                JWT.jwtList.add(jwt);
-                account.setJwt(jwt);
-                accounts.add(account);
+//                String token = Server.hashPassword(name.getText() + password.getText());
+//                JWT jwt = new JWT(token, name.getText());
+//                JWT.jwtList.add(jwt);
+//                account.setJwt(jwt);
+//                accounts.add(account);
                 JOptionPane.showMessageDialog(frame, "Account created");
                 frame.dispose();
                 new MainMenu(account);

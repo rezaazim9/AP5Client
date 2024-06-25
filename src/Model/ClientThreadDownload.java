@@ -1,6 +1,6 @@
 package Model;
 
-public class ClientThreadDownload extends Thread{
+public class ClientThreadDownload extends Thread {
 
 
 }

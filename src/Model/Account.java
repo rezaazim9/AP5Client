@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Account {
 
-   private String name;
-  private String password;
-   private JWT jwt;
+    private String name;
+    private String password;
+    private JWT jwt;
     private ArrayList<RFile> files;
 
     public Account(String name, String password, ArrayList<RFile> files, JWT jwt) {

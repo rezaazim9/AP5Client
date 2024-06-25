@@ -31,15 +31,19 @@ public class RFile {
     public void setRequests(ArrayList<Account> requests) {
         this.requests = requests;
     }
+
     public void addRequest(Account account) {
         requests.add(account);
     }
+
     public void addAccount(Account account) {
         accounts.add(account);
     }
+
     public void removeRequest(Account account) {
         requests.remove(account);
     }
+
     public void removeAccount(Account account) {
         accounts.remove(account);
     }
