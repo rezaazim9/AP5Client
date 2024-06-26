@@ -1,7 +1,6 @@
 package View;
 
 import Model.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,11 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-
 
 public class LoginMenu implements ActionListener {
     JFrame frame;
@@ -88,28 +89,15 @@ public class LoginMenu implements ActionListener {
         return new Account(name.getText(), hashPassword(password.getText()), new ArrayList<>(), new JWT(hashPassword(name.getText() + password.getText()), name.getText()));
     }
 
-    public void writer(Account account) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(Variables.request, account);
-    }
-
-    public boolean response() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(Variables.response, boolean.class);
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             try {
-                JsonFileHandler jsonFileHandler = new JsonFileHandler();
-                jsonFileHandler.writeRequest(createAccount());
                 Socket socket = new Socket("localhost", 1111);
-                socket.getOutputStream().write(0);
-                new ClientTCP(socket).start();
-                boolean response = jsonFileHandler.waitForResponse();
-                System.out.println(response);
-                if (response) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                outputStream.writeObject(new Packet(createAccount(), "login"));
+                if ((boolean) inputStream.readObject()) {
                     account = createAccount();
                     JOptionPane.showMessageDialog(frame, "Login successful");
                     frame.dispose();
@@ -118,21 +106,21 @@ public class LoginMenu implements ActionListener {
                     JOptionPane.showMessageDialog(frame, "Invalid username or password");
                 }
                 socket.close();
-            }
-            catch (IOException | InterruptedException ex) {
+            } catch (UnknownHostException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         }
         if (e.getSource() == registerButton) {
             try {
-                JsonFileHandler jsonFileHandler = new JsonFileHandler();
-                jsonFileHandler.writeRequest(createAccount());
                 Socket socket = new Socket("localhost", 1111);
-                socket.getOutputStream().write(1);
-                new ClientTCP(socket).start();
-                boolean response = jsonFileHandler.waitForResponse();
-                System.out.println(response);
-                if (response) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                outputStream.writeObject(new Packet(createAccount(), "register"));
+                if ((boolean) inputStream.readObject()) {
                     account = createAccount();
                     JOptionPane.showMessageDialog(frame, "Register successful");
                     frame.dispose();
@@ -141,8 +129,11 @@ public class LoginMenu implements ActionListener {
                     JOptionPane.showMessageDialog(frame, "Username already exists");
                 }
                 socket.close();
-            }
-            catch (IOException | InterruptedException ex) {
+            } catch (UnknownHostException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
         }

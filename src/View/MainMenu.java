@@ -80,6 +80,5 @@ public class MainMenu implements ActionListener {
             frame.dispose();
             new RequestAccessFrame(account);
         }
-
     }
 }

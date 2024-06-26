@@ -1,6 +1,11 @@
 package Model;
 
-public class JWT {
+import java.io.Serial;
+import java.io.Serializable;
+
+public class JWT implements Serializable {
+    @Serial
+    final private static long serialVersionUID = -8445809092316972845L;
     private String token;
     private String username;
     public JWT() {
