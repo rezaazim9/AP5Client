@@ -1,7 +1,5 @@
 package Model;
 
-import View.LoginMenu;
-
 import java.net.Socket;
 
 public class ClientTCP extends Thread {
@@ -13,6 +11,10 @@ public class ClientTCP extends Thread {
 
     @Override
     public void run() {
-        new LoginMenu();
+        try {
+            socket.getOutputStream().write(1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

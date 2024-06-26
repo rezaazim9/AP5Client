@@ -5,6 +5,7 @@ import Model.Account;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 public class DownloadFrame implements ActionListener {
     JFrame frame;
@@ -36,7 +37,7 @@ public class DownloadFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu(account);
+            new MainMenu(account,new Socket());
         }
     }
 }

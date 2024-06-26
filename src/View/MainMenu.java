@@ -5,6 +5,7 @@ import Model.Account;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 public class MainMenu implements ActionListener {
     JFrame frame;
@@ -16,8 +17,10 @@ public class MainMenu implements ActionListener {
     JButton viewButton;
     JButton requestAccessButton;
     Account account;
+    Socket socket;
 
-    public MainMenu(Account account) {
+    public MainMenu(Account account,Socket socket){
+        this.socket = socket;
         this.account = account;
         frame = new JFrame();
         panel = new JPanel();

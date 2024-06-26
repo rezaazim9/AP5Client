@@ -1,16 +1,15 @@
 package View;
 
-import Model.Account;
-import Model.JWT;
+import Model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -91,50 +90,60 @@ public class LoginMenu implements ActionListener {
 
     public void writer(Account account) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\Request.json"), account);
+        objectMapper.writeValue(Variables.request, account);
     }
 
-    public boolean reader() throws IOException {
+    public boolean response() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        boolean response = objectMapper.readValue(new File("C:\\Users\\ostad\\IdeaProjects\\Response.json"), boolean.class);
-        objectMapper.writeValue(new File("C:\\Users\\ostad\\IdeaProjects\\Response.json"), null);
-        return response;
+        return objectMapper.readValue(Variables.response, boolean.class);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            writer(createAccount());
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
-        boolean response;
-//        try {
-//            response = reader();
-//        } catch (IOException ex) {
-//            throw new RuntimeException(ex);
-//        }
         if (e.getSource() == loginButton) {
-            if (true) {
-                JOptionPane.showMessageDialog(frame, "Login Successful");
-                frame.dispose();
-                new MainMenu(account);
-            } else {
-                JOptionPane.showMessageDialog(frame, "Login Failed");
+            try {
+                JsonFileHandler jsonFileHandler = new JsonFileHandler();
+                jsonFileHandler.writeRequest(createAccount());
+                Socket socket = new Socket("localhost", 1111);
+                socket.getOutputStream().write(0);
+                new ClientTCP(socket).start();
+                boolean response = jsonFileHandler.waitForResponse();
+                System.out.println(response);
+                if (response) {
+                    account = createAccount();
+                    JOptionPane.showMessageDialog(frame, "Login successful");
+                    frame.dispose();
+                    new MainMenu(account, null);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Invalid username or password");
+                }
+                socket.close();
+            }
+            catch (IOException | InterruptedException ex) {
+                throw new RuntimeException(ex);
             }
         }
         if (e.getSource() == registerButton) {
-            if (false) {
-                JOptionPane.showMessageDialog(frame, "Account already exists");
-            } else {
-//                String token = Server.hashPassword(name.getText() + password.getText());
-//                JWT jwt = new JWT(token, name.getText());
-//                JWT.jwtList.add(jwt);
-//                account.setJwt(jwt);
-//                accounts.add(account);
-                JOptionPane.showMessageDialog(frame, "Account created");
-                frame.dispose();
-                new MainMenu(account);
+            try {
+                JsonFileHandler jsonFileHandler = new JsonFileHandler();
+                jsonFileHandler.writeRequest(createAccount());
+                Socket socket = new Socket("localhost", 1111);
+                socket.getOutputStream().write(1);
+                new ClientTCP(socket).start();
+                boolean response = jsonFileHandler.waitForResponse();
+                System.out.println(response);
+                if (response) {
+                    account = createAccount();
+                    JOptionPane.showMessageDialog(frame, "Register successful");
+                    frame.dispose();
+                    new MainMenu(account, null);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Username already exists");
+                }
+                socket.close();
+            }
+            catch (IOException | InterruptedException ex) {
+                throw new RuntimeException(ex);
             }
         }
     }

@@ -40,7 +40,7 @@ public class ViewAccessFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu(account);
+            new MainMenu(account,null);
         }
         if (e.getSource() == accessButton) {
             boolean found = false;

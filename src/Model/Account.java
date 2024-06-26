@@ -8,6 +8,8 @@ public class Account {
     private String password;
     private JWT jwt;
     private ArrayList<RFile> files;
+    public Account() {
+    }
 
     public Account(String name, String password, ArrayList<RFile> files, JWT jwt) {
         this.name = name;
