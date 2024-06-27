@@ -1,8 +1,6 @@
 package View;
 
-import Model.Account;
-import Model.Packet;
-import Model.RFile;
+import Model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,11 +21,13 @@ public class AccessFrame implements ActionListener {
     JList<String> requestList;
     Account account;
     JList<String> list;
+    int id;
     RFile rfile = new RFile(0, null, new ArrayList<>(), new ArrayList<>());
 
     public AccessFrame(Account account, int id) throws IOException, ClassNotFoundException {
         this.account = account;
         frame = new JFrame();
+        this.id=id;
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
@@ -70,26 +70,20 @@ public class AccessFrame implements ActionListener {
             new ViewAccessFrame(account);
         }
         if (e.getSource() == addButton) {
-//            for (Account account1:Server.accounts){
-//                if (account1.getName().equals(accountName.getText())){
-//                    rfile.addAccount(account1);
-//                    account1.getFiles().add(rfile);
-//                    frame.dispose();
-//                    rfile.removeRequest(account1);
-//                    new AccessFrame(account, rfile.file.getName());
-//                }
-//            }
+           try {
+                Socket socket = new Socket("localhost", 1111);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(new Packet(accountName.getText(),"add"));
+            }catch (Exception ex){
+            }
         }
         if (e.getSource() == removeButton) {
-//            for (Account account1:Server.accounts){
-//                if (account1.getName().equals(accountName.getText())){
-//                    rfile.removeAccount(account1);
-//                    account1.getFiles().remove(rfile);
-//                    frame.dispose();
-//                    rfile.removeRequest(account1);
-//                    new AccessFrame(account, rfile.file.getName());
-//                }
-//            }
+            try {
+                Socket socket = new Socket("localhost", 1111);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(new Packet(new RequestAccess(new Account(accountName.getText(),"0",null,new JWT(),new ArrayList<>()),id),"remove"));
+            }catch (Exception ex){
+            }
         }
     }
 }
