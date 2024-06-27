@@ -1,10 +1,15 @@
 package View;
 
 import Model.Account;
+import Model.Packet;
+import Model.RequestAccess;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class ViewAccessFrame implements ActionListener {
     JFrame frame;
@@ -26,7 +31,7 @@ public class ViewAccessFrame implements ActionListener {
         accessButton.addActionListener(this);
         file.setBounds(150, 150, 200, 30);
         panel.add(file);
-        file.setText("Enter the file name");
+        file.setText("Enter the file ID (Integer)");
         backButton = new JButton("Back");
         accessButton.setBounds(150, 300, 200, 30);
         backButton.setBounds(150, 400, 200, 30);
@@ -43,17 +48,21 @@ public class ViewAccessFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == accessButton) {
-            boolean found = false;
             frame.dispose();
-//            for (RFile f : Server.files) {
-//                if (f.file.getName().equals(file.getText())&&f.getAccounts().contains(account)) {
-//                    found = true;
-//                }
-//            }
-            if (found) {
-                new AccessFrame(account, file.getText());
-            } else {
-                new ViewAccessFrame(account);
+            try {
+                Socket socket = new Socket("localhost", 1111);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+                outputStream.writeObject(new Packet(new RequestAccess(account,Integer.parseInt(file.getText())), "viewRequestAccess"));
+                if ((boolean)inputStream.readObject()){
+                    new AccessFrame(account,Integer.parseInt(file.getText()));
+                }
+                else {
+                    new ViewAccessFrame(account);
+                }
+            }
+            catch (Exception ex){
+
             }
         }
     }

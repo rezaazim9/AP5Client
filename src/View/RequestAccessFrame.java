@@ -30,7 +30,7 @@ public class RequestAccessFrame implements ActionListener {
         accessButton = new JButton("Request Access");
         accessButton.setBounds(150, 300, 200, 30);
         fileName = new JTextArea();
-        fileName.setText("Enter the file name");
+        fileName.setText("Enter the file ID (Integer)");
         fileName.setBounds(150, 200, 200, 30);
         panel.add(fileName);
         backButton = new JButton("Back");
@@ -53,7 +53,7 @@ public class RequestAccessFrame implements ActionListener {
             try {
                 socket = new Socket("localhost", 1111);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.writeObject(new Packet(new RequestAccess(account,fileName.getText()), "requestAccess"));
+                outputStream.writeObject(new Packet(new RequestAccess(account,Integer.parseInt(fileName.getText())), "requestAccess"));
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
