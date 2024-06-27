@@ -5,6 +5,7 @@ import Model.Account;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.Socket;
 
 public class MainMenu implements ActionListener {
@@ -17,10 +18,8 @@ public class MainMenu implements ActionListener {
     JButton viewButton;
     JButton requestAccessButton;
     Account account;
-    Socket socket;
 
-    public MainMenu(Account account,Socket socket){
-        this.socket = socket;
+    public MainMenu(Account account){
         this.account = account;
         frame = new JFrame();
         panel = new JPanel();
@@ -74,7 +73,13 @@ public class MainMenu implements ActionListener {
         }
         if (e.getSource() == viewButton) {
             frame.dispose();
-            new ViewFrame(account);
+            try {
+                new ViewFrame(account);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         if (e.getSource() == requestAccessButton) {
             frame.dispose();

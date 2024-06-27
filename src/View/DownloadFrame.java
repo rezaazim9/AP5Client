@@ -30,14 +30,13 @@ public class DownloadFrame implements ActionListener {
         backButton.addActionListener(this);
         downloadButton.addActionListener(this);
         frame.setVisible(true);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu(account,new Socket());
+            new MainMenu(account);
         }
     }
 }

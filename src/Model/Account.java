@@ -6,19 +6,29 @@ import java.util.ArrayList;
 
 public class Account implements Serializable {
     @Serial
-  final   private static long serialVersionUID = -3930272386469641391L;
+    final private static long serialVersionUID = -3930272386469641391L;
     private String name;
     private String password;
     private JWT jwt;
     private ArrayList<RFile> files;
+    private ArrayList<RequestAccess> requestAccesses;
     public Account() {
     }
 
-    public Account(String name, String password, ArrayList<RFile> files, JWT jwt) {
+    public ArrayList<RequestAccess> getRequestAccesses() {
+        return requestAccesses;
+    }
+
+    public void setRequestAccesses(ArrayList<RequestAccess> requestAccesses) {
+        this.requestAccesses = requestAccesses;
+    }
+
+    public Account(String name, String password, ArrayList<RFile> files, JWT jwt, ArrayList<RequestAccess> requestAccess) {
         this.name = name;
         this.files = files;
         this.password = password;
         this.jwt = jwt;
+        this.requestAccesses=requestAccess;
     }
 
     public String getName() {

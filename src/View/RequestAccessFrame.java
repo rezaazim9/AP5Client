@@ -1,10 +1,16 @@
 package View;
 
 import Model.Account;
+import Model.Packet;
+import Model.RequestAccess;
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 public class RequestAccessFrame implements ActionListener {
     JFrame frame;
@@ -40,14 +46,17 @@ public class RequestAccessFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu(account,null);
+            new MainMenu(account);
         }
         if (e.getSource() == accessButton) {
-//            for (RFile f : Server.files) {
-//                if (f.file.getName().equals(fileName.getText())) {
-//                    f.addRequest(account);
-//                }
-//            }
+            Socket socket;
+            try {
+                socket = new Socket("localhost", 1111);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(new Packet(new RequestAccess(account,fileName.getText()), "requestAccess"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }

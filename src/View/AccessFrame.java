@@ -18,10 +18,10 @@ public class AccessFrame implements ActionListener {
     JList<String> requestList;
     Account account;
     JList<String> list;
-    RFile rfile=new RFile(0,null,new ArrayList<>(),new ArrayList<>());
+    RFile rfile = new RFile(0, null, new ArrayList<>(), new ArrayList<>());
 
     public AccessFrame(Account account, String fileName) {
-             this.account = account;
+        this.account = account;
         frame = new JFrame();
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
@@ -31,7 +31,7 @@ public class AccessFrame implements ActionListener {
 //                rfile = f;
 //            }
 //        }
-        if (rfile.file == null||!account.getFiles().contains(rfile)) {
+        if (rfile.file == null || !account.getFiles().contains(rfile)) {
             frame.dispose();
         }
         ArrayList<String> accounts = new ArrayList<>();

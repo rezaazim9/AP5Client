@@ -44,7 +44,7 @@ public class UploadFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
             frame.dispose();
-            new MainMenu(account, null);
+            new MainMenu(account);
         }
         if (e.getSource() == uploadButton) {
             if (JOptionPane.showConfirmDialog(frame, account.getJwt(), "Access", JOptionPane.YES_NO_OPTION) == 0) {

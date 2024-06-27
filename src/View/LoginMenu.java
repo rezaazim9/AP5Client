@@ -86,7 +86,7 @@ public class LoginMenu implements ActionListener {
     }
 
     public Account createAccount() {
-        return new Account(name.getText(), hashPassword(password.getText()), new ArrayList<>(), new JWT(hashPassword(name.getText() + password.getText()), name.getText()));
+        return new Account(name.getText(), hashPassword(password.getText()), new ArrayList<>(), new JWT(hashPassword(name.getText() + password.getText()), name.getText()), new ArrayList<>());
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LoginMenu implements ActionListener {
                     account = createAccount();
                     JOptionPane.showMessageDialog(frame, "Login successful");
                     frame.dispose();
-                    new MainMenu(account, null);
+                    new MainMenu(account);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid username or password");
                 }
@@ -124,7 +124,7 @@ public class LoginMenu implements ActionListener {
                     account = createAccount();
                     JOptionPane.showMessageDialog(frame, "Register successful");
                     frame.dispose();
-                    new MainMenu(account, null);
+                    new MainMenu(account);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Username already exists");
                 }
