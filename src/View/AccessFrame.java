@@ -22,13 +22,12 @@ public class AccessFrame implements ActionListener {
     Account account;
     JList<String> list;
     int id;
-    RFile rfile = new RFile(0, null, new ArrayList<>(), new ArrayList<>());
-
     public AccessFrame(Account account, int id) throws IOException, ClassNotFoundException {
         this.account = account;
         frame = new JFrame();
         this.id=id;
         panel = new JPanel();
+        panel.setLayout(null);
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
         Socket socket = new Socket("localhost", 1111);
@@ -36,6 +35,12 @@ public class AccessFrame implements ActionListener {
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
         outputStream.writeObject(new Packet(id, "viewRequests"));
         ArrayList<String> requests= (ArrayList<String>) inputStream.readObject();
+        Socket socket2 = new Socket("localhost", 1111);
+        ObjectOutputStream outputStream2 = new ObjectOutputStream(socket2.getOutputStream());
+        ObjectInputStream inputStream2 = new ObjectInputStream(socket2.getInputStream());
+        outputStream2.writeObject(new Packet(id, "viewAccess"));
+        ArrayList<String> access= (ArrayList<String>) inputStream2.readObject();
+        list=new JList<>(access.toArray(new String[0]));
         list.setBounds(250, 20, 150, 200);
         requestList = new JList<>(requests.toArray(new String[0]));
         requestList.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 25));
@@ -43,7 +48,6 @@ public class AccessFrame implements ActionListener {
         list.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 30));
         panel.add(requestList);
         panel.add(list);
-        panel.setLayout(null);
         accountName = new JTextArea();
         accountName.setText("Enter the account name");
         accountName.setBounds(150, 250, 200, 30);
@@ -73,7 +77,11 @@ public class AccessFrame implements ActionListener {
            try {
                 Socket socket = new Socket("localhost", 1111);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.writeObject(new Packet(accountName.getText(),"add"));
+                Account account1=new Account();
+                account1.setName(accountName.getText());
+                outputStream.writeObject(new Packet(new RequestAccess(account1,id),"add"));
+               frame.dispose();
+               new AccessFrame(account,id);
             }catch (Exception ex){
             }
         }
@@ -81,7 +89,11 @@ public class AccessFrame implements ActionListener {
             try {
                 Socket socket = new Socket("localhost", 1111);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.writeObject(new Packet(new RequestAccess(new Account(accountName.getText(),"0",null,new JWT(),new ArrayList<>()),id),"remove"));
+                Account account1=new Account();
+                account1.setName(accountName.getText());
+                outputStream.writeObject(new Packet(new RequestAccess(account1,id),"remove"));
+                frame.dispose();
+                new AccessFrame(account,id);
             }catch (Exception ex){
             }
         }

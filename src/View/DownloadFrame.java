@@ -1,10 +1,12 @@
 package View;
 
 import Model.Account;
+import Model.Packet;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class DownloadFrame implements ActionListener {
@@ -37,6 +39,15 @@ public class DownloadFrame implements ActionListener {
         if (e.getSource() == backButton) {
             frame.dispose();
             new MainMenu(account);
+        }
+        if (e.getSource() == downloadButton) {
+            try {
+                Socket socket = new Socket("localhost", 1111);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(new Packet(account, "JWTDownload"));
+            } catch (Exception ex) {
+
+            }
         }
     }
 }

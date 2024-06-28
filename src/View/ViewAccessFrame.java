@@ -62,7 +62,6 @@ public class ViewAccessFrame implements ActionListener {
                 }
             }
             catch (Exception ex){
-
             }
         }
     }

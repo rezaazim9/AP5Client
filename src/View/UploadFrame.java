@@ -1,12 +1,16 @@
 package View;
 
 import Model.Account;
+import Model.AccountFile;
+import Model.Packet;
 import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class UploadFrame implements ActionListener {
@@ -47,22 +51,12 @@ public class UploadFrame implements ActionListener {
             new MainMenu(account);
         }
         if (e.getSource() == uploadButton) {
-            if (JOptionPane.showConfirmDialog(frame, account.getJwt(), "Access", JOptionPane.YES_NO_OPTION) == 0) {
-                File file = new File(fileAddress.getText());
-                ArrayList<Account> accounts = new ArrayList<>();
-                accounts.add(account);
-//                Server.files.add(new RFile(id++, file, accounts, new ArrayList<>()));
-                account.getFiles().add(new RFile(id++, file, accounts, new ArrayList<>()));
-                long length = file.length();
-                while (length > 0) {
-                    length -= 1000;
-                    byte[] upload = new byte[1000];
-                    if (length < 0) {
-                        upload = new byte[(int) (length + 1000)];
-                    }
-//                    ClientThreadUpload clientThreadUpload = new ClientThreadUpload(file, account, upload);
-//                    clientThreadUpload.start();
-                }
+            try {
+                Socket socket = new Socket("localhost", 1111);
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(new Packet(new AccountFile(fileAddress.getText(),account), "JWTUpload"));
+            }catch (Exception ex){
+
             }
         }
     }

@@ -21,18 +21,17 @@ public class ViewFrame implements ActionListener {
     Account account;
 
     public ViewFrame(Account account) throws IOException, ClassNotFoundException {
-
+        Socket socket = new Socket("localhost", 1111);
+        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+        outputStream.writeObject(new Packet(account, "view"));
+        ArrayList<String> filesName= (ArrayList<String>) inputStream.readObject();
         this.account = account;
         frame = new JFrame();
         panel = new JPanel();
         frame.setBounds(450, 150, 500, 500);
         frame.add(panel);
         panel.setLayout(null);
-        Socket socket = new Socket("localhost", 1111);
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        outputStream.writeObject(new Packet(account, "view"));
-        ArrayList<String> filesName=(ArrayList<String>) inputStream.readObject();
         list = new JList<>(filesName.toArray(new String[0]));
         list.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 25));
         list.setBounds(150, 20, 200, 330);

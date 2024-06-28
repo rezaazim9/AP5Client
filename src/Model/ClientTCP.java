@@ -3,7 +3,7 @@ package Model;
 import java.net.Socket;
 
 public class ClientTCP extends Thread {
-    Socket socket;
+    private Socket socket;
 
     public ClientTCP(Socket socket) {
         this.socket = socket;
