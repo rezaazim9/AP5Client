@@ -1,9 +1,6 @@
 package View;
 
-import Model.Account;
-import Model.AccountFile;
-import Model.Packet;
-import Model.RFile;
+import Model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +9,7 @@ import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class UploadFrame implements ActionListener {
     JFrame frame;
@@ -52,9 +50,14 @@ public class UploadFrame implements ActionListener {
         }
         if (e.getSource() == uploadButton) {
             try {
+                File file=new File(fileAddress.getText());
+                Random random = new Random();
+                int port = random.nextInt(1000) + 1000;
                 Socket socket = new Socket("localhost", 1111);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.writeObject(new Packet(new AccountFile(fileAddress.getText(),account), "JWTUpload"));
+                outputStream.writeObject(new Packet(new AccountFile(file.getName(),account,port), "JWTUpload"));
+                    byte[] upload = new byte[1000];
+                    new ClientThreadUpload(new File(fileAddress.getText()), account,upload,port).start();
             }catch (Exception ex){
 
             }

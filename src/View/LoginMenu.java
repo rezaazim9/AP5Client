@@ -91,6 +91,9 @@ public class LoginMenu implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == exitButton) {
+            frame.dispose();
+        }
         if (e.getSource() == loginButton) {
             try {
                 Socket socket = new Socket("localhost", 1111);
