@@ -13,7 +13,7 @@ public class ClientThreadUpload extends Thread {
     private File file;
     private Account account;
     private int port;
-    private static final int MAX_RETRIES = 3;
+    private static final int MAX_RETRIES = 5;
 
     public ClientThreadUpload(File file, Account account, int port) {
         this.file = file;
