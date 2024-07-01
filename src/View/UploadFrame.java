@@ -1,5 +1,6 @@
 package View;
 
+import Controller.ClientThreadUpload;
 import Model.*;
 
 import javax.swing.*;
@@ -8,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class UploadFrame implements ActionListener {
@@ -18,7 +18,6 @@ public class UploadFrame implements ActionListener {
     JButton backButton;
     JTextArea fileAddress;
     Account account;
-    static int id = 0;
 
     public UploadFrame(Account account) {
         this.account = account;
@@ -28,7 +27,7 @@ public class UploadFrame implements ActionListener {
         backButton = new JButton("Back");
         fileAddress = new JTextArea();
         frame.setBounds(450, 150, 500, 500);
-        fileAddress.setBounds(100, 150, 300, 30);
+        fileAddress.setBounds(100, 150, 300, 40);
         fileAddress.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 30));
         panel.add(fileAddress);
         frame.add(panel);
@@ -50,17 +49,23 @@ public class UploadFrame implements ActionListener {
         }
         if (e.getSource() == uploadButton) {
             try {
-                File file=new File(fileAddress.getText());
+                File file = new File(fileAddress.getText());
+                if (!file.exists()) {
+                    return;
+                }
                 Random random = new Random();
-                int port = random.nextInt(1000) + 1000;
+                int port = random.nextInt(1000) + 9000;
                 Socket socket = new Socket("localhost", 1111);
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                outputStream.writeObject(new Packet(new AccountFile(file.getName(),account,port), "JWTUpload"));
-                    byte[] upload = new byte[1000];
-                    new ClientThreadUpload(new File(fileAddress.getText()), account,upload,port).start();
-            }catch (Exception ex){
-
+                AccountFile accountFile = new AccountFile(file.getName(), account, port);
+                outputStream.writeObject(new Packet(accountFile, "JWTUpload"));
+                outputStream.flush();
+                outputStream.close();
+                socket.close();
+                  new ClientThreadUpload(file, account, port).start();
+            } catch (Exception ex) {
             }
         }
     }
+
 }

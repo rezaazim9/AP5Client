@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.Socket;
 
 public class MainMenu implements ActionListener {
     JFrame frame;
@@ -19,7 +18,7 @@ public class MainMenu implements ActionListener {
     JButton requestAccessButton;
     Account account;
 
-    public MainMenu(Account account){
+    public MainMenu(Account account) {
         this.account = account;
         frame = new JFrame();
         panel = new JPanel();

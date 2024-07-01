@@ -2,7 +2,6 @@ package View;
 
 import Model.Account;
 import Model.Packet;
-import Model.RFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
